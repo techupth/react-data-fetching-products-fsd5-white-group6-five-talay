@@ -7,7 +7,10 @@ function App() {
   const [productPost, setProductPost] = useState([]);
   const getProductPost = async () => {
     const result = await axios.get("http://localhost:4001/products");
-    console.log(result);
+    setProductPost(result.data.data);
+  };
+  const deleteProductPost = async (id) => {
+    const result = await axios.delete(`http://localhost:4001/products/${id}`);
     setProductPost(result.data.data);
   };
   useEffect(() => {
@@ -36,7 +39,14 @@ function App() {
                 <p>Product description: {item.description}</p>
               </div>
 
-              <button className="delete-button">x</button>
+              <button
+                className="delete-button"
+                onClick={() => {
+                  deleteProductPost(item.id);
+                }}
+              >
+                x
+              </button>
             </div>
           );
         })}
