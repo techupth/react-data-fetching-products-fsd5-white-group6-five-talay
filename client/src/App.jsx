@@ -17,11 +17,12 @@ function App() {
   };
   const deleteProduct = async (id) => {
     await axios.delete(`http://localhost:4001/products/${id}`);
+    getProduct();
   };
 
   useEffect(() => {
     getProduct();
-  }, [blogProduct]);
+  }, []);
 
   return (
     <div className="App">
