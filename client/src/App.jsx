@@ -1,13 +1,46 @@
+import { useEffect, useState } from "react";
 import "./App.css";
+import axios from "axios";
 
+// http://localhost:4001/products
 function App() {
+  const [productPost, setProductPost] = useState([]);
+  const getProductPost = async () => {
+    const result = await axios.get("http://localhost:4001/products");
+    console.log(result);
+    setProductPost(result.data.data);
+  };
+  useEffect(() => {
+    getProductPost();
+  }, []);
   return (
     <div className="App">
       <div className="app-wrapper">
         <h1 className="app-title">Products</h1>
       </div>
       <div className="product-list">
-        <div className="product">
+        {productPost.map((item) => {
+          return (
+            <div className="product" key={item.id}>
+              <div className="product-preview">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  width="350"
+                  height="350"
+                />
+              </div>
+              <div className="product-detail">
+                <h1>Product name:{item.name}</h1>
+                <h2>Product price: {item.price} Baht</h2>
+                <p>Product description: {item.description}</p>
+              </div>
+
+              <button className="delete-button">x</button>
+            </div>
+          );
+        })}
+        {/* <div className="product">
           <div className="product-preview">
             <img
               src="https://via.placeholder.com/350/350"
@@ -23,7 +56,7 @@ function App() {
           </div>
 
           <button className="delete-button">x</button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
