@@ -10,12 +10,11 @@ function App() {
     setProductPost(result.data.data);
   };
   const deleteProductPost = async (id) => {
-    const result = await axios.delete(`http://localhost:4001/products/${id}`);
-    setProductPost(result.data.data);
+    await axios.delete(`http://localhost:4001/products/${id}`);
   };
   useEffect(() => {
     getProductPost();
-  }, []);
+  }, [productPost]);
   return (
     <div className="App">
       <div className="app-wrapper">
